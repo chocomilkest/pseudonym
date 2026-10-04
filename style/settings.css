@@ -29,6 +29,7 @@
     flex-direction: column;
     flex-shrink: 0;
     gap: 10px;
+    min-width: 0;
 }
 
 .settings-option label {
@@ -93,12 +94,27 @@ textarea.settings-value-text {
 
 @media (max-width: 600px) {
     #settings-menu {
-        padding: 28px 20px 36px;
-        gap: 28px;
+        padding: 20px 12px 28px;
+        gap: 20px;
+        overscroll-behavior-y: contain;
+        scroll-padding-block: 20px;
     }
 
-    #settings-title { font-size: 32px; }
-    .settings-option label { font-size: 18px; }
+    #settings-title {
+        margin: 0 0 4px;
+        font-size: 28px;
+    }
+    .settings-option { gap: 8px; }
+    .settings-option label { font-size: 16px; }
     .settings-value-text,
-    .settings-value-dropbox { font-size: 20px; }
+    .settings-value-dropbox {
+        min-height: 48px;
+        padding: 12px;
+        font-size: 16px;
+        border-radius: 10px;
+    }
+    textarea.settings-value-text {
+        min-height: 104px;
+        padding-top: 12px;
+    }
 }

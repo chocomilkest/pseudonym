@@ -15,6 +15,7 @@ cp -R style "$staging_dir/style"
 mkdir "$staging_dir/assets"
 cp assets/*.webp "$staging_dir/assets/"
 cp index.html "$staging_dir/index.html"
+node scripts/build-styles.mjs "$staging_dir"
 
 rm -rf -- "$project_dir/build"
 mv "$staging_dir" "$project_dir/build"
