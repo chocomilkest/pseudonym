@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
     <title>pseudonym</title>
     <meta charset="utf-8">
@@ -37,7 +37,8 @@
                 <button id="leaderboard-game-continue-button" type="button">продолжить</button>
             </div>
         </div>
-        <div id="settings-menu">
+        <section id="settings-menu" aria-labelledby="settings-title">
+            <h1 id="settings-title">настройки</h1>
             <div class="settings-option">
                 <label for="settings-team1-name">Название первой команды:</label>
                 <input id="settings-team1-name" class="settings-value-text" type="text">
@@ -55,10 +56,11 @@
                 </select>
             </div>
             <div class="settings-option settings-option-custom-words">
-                <label for="settings-custom-words">Свои слова, разделение новой строкой, "," или ";"</label>
-                <textarea id="settings-custom-words" class="settings-value-text" rows="8"></textarea>
+                <label for="settings-custom-words">Свои слова:</label>
+                <textarea id="settings-custom-words" class="settings-value-text" rows="2" placeholder="слово 1, слово 2, слово 3" aria-describedby="settings-custom-words-hint"></textarea>
+                <span id="settings-custom-words-hint" class="visually-hidden">Разделяйте слова новой строкой, запятой или точкой с запятой.</span>
             </div>
-        </div>
+        </section>
     </div>
 
     <!-- TODO: move all buttons to footer for consistent bottom styling -->

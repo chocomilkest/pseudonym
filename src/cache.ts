@@ -25,7 +25,7 @@ function writeCacheValue(key: string, value: string) {
 }
 
 function isCategory(value: unknown): value is Category {
-    return typeof value === 'string' && value in CATEGORY_WORDS
+    return typeof value === 'string' && Object.hasOwn(CATEGORY_WORDS, value)
 }
 
 function readCategories(): Category[] {

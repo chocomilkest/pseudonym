@@ -19,16 +19,19 @@ const categoryBlocks = CATEGORY_BLOCKS_DATA.map((category) => new CategoryBlock(
 
 let initialized = false
 /* fetch previously toggled ids if any */
-let toggledIds: Category[] = GameCache.toggledCategories
+let toggledIds: Category[] = [...GameCache.toggledCategories]
 
-function updateButtonState(startButton: HTMLElement) {
-    if (toggledIds.length > 0)
-        startButton.style.setProperty("--box-color-sat", '65%')
-    else
-        startButton.style.setProperty("--box-color-sat", '10%')
+function getIncludedWords(): string[] {
+    return [...new Set(toggledIds.flatMap((id) =>
+        id === 'custom' ? GameCache.customWords : CATEGORY_WORDS[id]))]
 }
 
-function toggleCategory(block: CategoryBlock, startButton: HTMLElement) {
+function updateButtonState(startButton: HTMLButtonElement) {
+    startButton.disabled = getIncludedWords().length === 0
+    startButton.style.setProperty('--box-color-sat', startButton.disabled ? '10%' : '65%')
+}
+
+function toggleCategory(block: CategoryBlock, startButton: HTMLButtonElement) {
     block.toggle()
     if (block.toggled)
         toggledIds.push(block.id)
@@ -42,34 +45,21 @@ function toggleCategory(block: CategoryBlock, startButton: HTMLElement) {
 function onStartButtonPress() {
     GameCache.toggledCategories = toggledIds
 
-    if (toggledIds.length > 0) {
-        const includedWords: string[] = []
-
-        toggledIds.forEach((id) => {
-            const words: readonly string[] = id === 'custom'
-                ? GameCache.customWords
-                : CATEGORY_WORDS[id]
-            includedWords.push(...words)
+    const words = getIncludedWords()
+    if (words.length > 0) {
+        switchPageTo({
+            kind: 'game',
+            game: { words, turn: getCurrentTurn() }
         })
-
-        if (includedWords.length > 0) {
-            switchPageTo({
-                kind: "game",
-                game: {
-                    words: includedWords,
-                    turn: getCurrentTurn()
-                }
-            })
-        }
     }
 }
 
 export function initializeMenu() {
+    if (startButton instanceof HTMLButtonElement)
+        updateButtonState(startButton)
     if (initialized) return;
 
-    if (menu && startButton) {
-        /* Make the start button have those colors */
-        startButton.style.setProperty("--box-color-sat", '10%')
+    if (menu && startButton instanceof HTMLButtonElement) {
         startButton.addEventListener("click", () => 
                                      onStartButtonPress())
 

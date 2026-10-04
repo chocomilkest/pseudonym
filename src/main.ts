@@ -14,9 +14,6 @@ export let currentPage: PseudonymPage = {kind:"menu"}
 if (SelectionMenu && AliasGameBody && SettingsMenu && FooterElement) {
     initializeSettings() // sets listener for the settings menu
     initializeMenu()
-
-    // currentPage = {kind: 'game', game: { words: ['is that a gubby']}}
-    // initializeGame(currentPage.game)
 } else {
     console.error("failed to find some part of the app")
 }

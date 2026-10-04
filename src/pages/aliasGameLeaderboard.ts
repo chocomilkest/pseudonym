@@ -109,7 +109,8 @@ export function initializeLeaderboard(data: ScoreData) {
             leaderboardWinnerElem.style.display = 'flex'
             leaderboardTeams.style.display = 'none'
             leaderboardScore.style.display = 'none'
-            leaderboardWinnerText.innerText = `Победитель: ${winnerName}`
+            const tied = sorted.filter((team) => team.score === currentWinner.score).length > 1
+            leaderboardWinnerText.innerText = tied ? 'Ничья!' : `Победитель: ${winnerName}`
 
             const backToMenu = () => {
                 leaderboardWinnerElem.style.display = ''

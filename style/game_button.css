@@ -13,7 +13,11 @@
     align-items: center;
 }
 
-#game-button-start:hover {
+#game-button-start:hover:not(:disabled) {
     cursor: pointer;
     background-color: hsl(120, var(--box-color-sat), 25%);
+}
+
+#game-button-start:disabled {
+    cursor: not-allowed;
 }

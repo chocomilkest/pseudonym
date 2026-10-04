@@ -5,7 +5,7 @@ set -euo pipefail
 project_dir=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
 cd "$project_dir"
 
-tsc
+./node_modules/.bin/tsc
 
 staging_dir=$(mktemp -d /tmp/pseudonym-build.XXXXXX)
 trap 'rm -rf -- "$staging_dir"' EXIT

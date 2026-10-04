@@ -3,16 +3,16 @@ this is a little website i made for my family cuz alias games on app store and g
 the src is in english, but the ui and the words arent, feel free to fork this if you wanna make this an actual multilingual website
 
 ## how to build
-for building and local deployment you'll need:
-- typescript compiler
-- anything that can host a directory (in the example ill use python)
+Requires Node.js 22+, npm, and Python 3 for the local server.
 
-here is the commands:
+```sh
+npm ci
+npm run check
+npm test
+npm run build
+python3 -m http.server 8080 -d build
 ```
-git clone https://github.com/chocomilkest/pseudonym
-cd pseudonym
-ln -s ../index.html dist/index.html
-ln -s ../style dist/style
-ln -s ../assets dist/assets
-tsc && python -m http.server 8080 -d dist
-```
+
+Open http://localhost:8080. The `build/` directory contains the complete static site.
+Settings are saved automatically. Separate custom words with commas, semicolons,
+or new lines; spaces within a phrase are preserved.

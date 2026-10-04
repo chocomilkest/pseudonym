@@ -11,20 +11,20 @@ const teamTwoNameInput = document.getElementById('settings-team2-name') as HTMLI
 const roundTimeSelect  = document.getElementById('settings-round-time') as HTMLSelectElement
 const customWordsInput = document.getElementById('settings-custom-words') as HTMLTextAreaElement
 
-function handleTeamNameChange(teamOne: boolean, value: string) {
-    let trimmed = value.trim()
-    if (trimmed === '') {
-        if (teamOne) trimmed = DefaultValue_teamOneName
-        else         trimmed = DefaultValue_teamTwoName
-    }
+let initialized = false
 
-    if (teamOne) GameCache.teamOneName = trimmed
-    else         GameCache.teamTwoName = trimmed
-
+function bindTeamName(input: HTMLInputElement, key: 'teamOneName' | 'teamTwoName', fallback: string) {
+    input.value = GameCache[key]
+    input.addEventListener('input', () => {
+        GameCache[key] = input.value.trim() || fallback
+    })
+    input.addEventListener('blur', () => {
+        input.value = GameCache[key]
+    })
 }
 
 export function initializeSettings() {
-    if (!settingsButton || !teamOneNameInput || !teamTwoNameInput ||
+    if (initialized || !settingsButton || !teamOneNameInput || !teamTwoNameInput ||
         !roundTimeSelect || !customWordsInput)
         return
 
@@ -35,21 +35,8 @@ export function initializeSettings() {
             switchPageTo({kind: 'menu'})
     })
 
-    teamOneNameInput.addEventListener('change',
-        () => handleTeamNameChange(true, teamOneNameInput.value))
-    teamOneNameInput.addEventListener('focusout', () => {
-        const trimmed = teamOneNameInput.value.trim()
-        teamOneNameInput.value = trimmed !== '' ? trimmed : DefaultValue_teamOneName
-    })
-    teamOneNameInput.value = GameCache.teamOneName
-
-    teamTwoNameInput.addEventListener('change',
-        () => handleTeamNameChange(false, teamTwoNameInput.value))
-    teamTwoNameInput.addEventListener('focusout', () => {
-        const trimmed = teamTwoNameInput.value.trim()
-        teamTwoNameInput.value = trimmed !== '' ? trimmed : DefaultValue_teamTwoName
-    })
-    teamTwoNameInput.value = GameCache.teamTwoName
+    bindTeamName(teamOneNameInput, 'teamOneName', DefaultValue_teamOneName)
+    bindTeamName(teamTwoNameInput, 'teamTwoName', DefaultValue_teamTwoName)
 
     roundTimeSelect.addEventListener('change', () => {
         const time = Number.parseInt(roundTimeSelect.value)
@@ -57,11 +44,14 @@ export function initializeSettings() {
     })
     roundTimeSelect.value = GameCache.roundTime.toString()
 
-    customWordsInput.value = GameCache.customWords.join('\n')
-    customWordsInput.addEventListener('change', () => {
+    customWordsInput.value = GameCache.customWords.join(', ')
+    customWordsInput.addEventListener('input', () => {
         GameCache.customWords = customWordsInput.value.split(/[\n,;]+/)
-        customWordsInput.value = GameCache.customWords.join('\n')
     })
+    customWordsInput.addEventListener('blur', () => {
+        customWordsInput.value = GameCache.customWords.join(', ')
+    })
+    initialized = true
 }
 
 export function toggleSettingsButton(on: boolean) {

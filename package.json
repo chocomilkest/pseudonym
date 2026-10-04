@@ -1,0 +1,13 @@
+{
+  "name": "pseudonym",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "bash ./b",
+    "check": "tsc --noEmit",
+    "test": "tsc && node --test tests/*.test.mjs"
+  },
+  "devDependencies": {
+    "typescript": "5.9.3"
+  }
+}
