@@ -10,7 +10,7 @@
 }
 
 #alias-game-content.paused::after {
-    content: 'пауза';
+    content: attr(data-pause-label);
     font-size: 48px;
 }
 

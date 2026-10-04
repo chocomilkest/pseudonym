@@ -12,17 +12,17 @@
     <div id="header">
         <div id="header-text-title">pseudonym</div>
         <div id="header-round-timer" role="timer" aria-live="off"></div>
-        <button id="header-button-settings" type="button">настройки</button>
-        <button id="header-button-pause" type="button">пауза</button>
+        <button id="header-button-settings" data-i18n="settings" type="button">настройки</button>
+        <button id="header-button-pause" data-i18n="pause" type="button">пауза</button>
     </div>
     <div id="mainbody">
         <div id="selection-menu"></div>
         <div id="alias-game">
             <div id="alias-game-content"></div>
             <div id="alias-game-buttons">
-                <button id="alias-game-discard" type="button">пропустить</button>
-                <button id="alias-game-approve" type="button">угадано</button>
-                <button id="alias-game-end-proceed" type="button">продолжить</button>
+                <button id="alias-game-discard" data-i18n="skip" type="button">пропустить</button>
+                <button id="alias-game-approve" data-i18n="guessed" type="button">угадано</button>
+                <button id="alias-game-end-proceed" data-i18n="continue" type="button">продолжить</button>
             </div>
         </div>
         <div id="leaderboard-game">
@@ -34,38 +34,45 @@
                 </div>
             </div>
             <div id="leaderboard-game-buttons">
-                <button id="leaderboard-game-continue-button" type="button">продолжить</button>
+                <button id="leaderboard-game-continue-button" data-i18n="continue" type="button">продолжить</button>
             </div>
         </div>
         <section id="settings-menu" aria-labelledby="settings-title">
-            <h1 id="settings-title">настройки</h1>
+            <h1 id="settings-title" data-i18n="settings">настройки</h1>
             <div class="settings-option">
-                <label for="settings-team1-name">Название первой команды:</label>
+                <label for="settings-language" data-i18n="language">Язык:</label>
+                <select id="settings-language" class="settings-value-dropbox">
+                    <option value="ru" lang="ru">Русский</option>
+                    <option value="en" lang="en">English</option>
+                </select>
+            </div>
+            <div class="settings-option">
+                <label for="settings-team1-name" data-i18n="teamOneLabel">Название первой команды:</label>
                 <input id="settings-team1-name" class="settings-value-text" type="text">
             </div>
             <div class="settings-option">
-                <label for="settings-team2-name">Название второй команды:</label>
+                <label for="settings-team2-name" data-i18n="teamTwoLabel">Название второй команды:</label>
                 <input id="settings-team2-name" class="settings-value-text" type="text">
             </div>
             <div class="settings-option">
-                <label for="settings-round-time">Время раунда:</label>
+                <label for="settings-round-time" data-i18n="roundTime">Время раунда:</label>
                 <select id="settings-round-time" class="settings-value-dropbox">
-                    <option value="30">30 секунд</option>
-                    <option value="60" selected>1 минута</option>
-                    <option value="120">2 минуты</option>
+                    <option data-i18n="seconds30" value="30">30 секунд</option>
+                    <option data-i18n="minute1" value="60" selected>1 минута</option>
+                    <option data-i18n="minutes2" value="120">2 минуты</option>
                 </select>
             </div>
             <div class="settings-option settings-option-custom-words">
-                <label for="settings-custom-words">Свои слова:</label>
-                <textarea id="settings-custom-words" class="settings-value-text" rows="2" placeholder="слово 1, слово 2, слово 3" aria-describedby="settings-custom-words-hint"></textarea>
-                <span id="settings-custom-words-hint" class="visually-hidden">Разделяйте слова новой строкой, запятой или точкой с запятой.</span>
+                <label for="settings-custom-words" data-i18n="customWords">Свои слова:</label>
+                <textarea id="settings-custom-words" class="settings-value-text" rows="2" data-i18n-placeholder="customPlaceholder" placeholder="слово 1, слово 2, слово 3" aria-describedby="settings-custom-words-hint"></textarea>
+                <span id="settings-custom-words-hint" data-i18n="customHint" class="visually-hidden">Разделяйте слова новой строкой, запятой или точкой с запятой.</span>
             </div>
         </section>
     </div>
 
     <!-- TODO: move all buttons to footer for consistent bottom styling -->
     <div id="footer">
-        <button id="game-button-start" type="button">начать</button>
+        <button id="game-button-start" data-i18n="start" type="button">начать</button>
     </div>
 </body>
 </html>

@@ -1,3 +1,4 @@
+import { applyTranslations } from './i18n.ts'
 import { PseudonymPage } from './pages/pages.ts'
 
 import { SettingsMenu,  initializeSettings, toggleSettingsButton }
@@ -12,6 +13,7 @@ import { initializeLeaderboard, LeaderboardBody }
 export let currentPage: PseudonymPage = {kind:"menu"}
 
 if (SelectionMenu && AliasGameBody && SettingsMenu && FooterElement) {
+    applyTranslations()
     initializeSettings() // sets listener for the settings menu
     initializeMenu()
 } else {

@@ -1,5 +1,6 @@
 import { GameCache } from "../cache.ts"
-import { DefaultValue_teamOneName, DefaultValue_teamTwoName } from "../constants.ts"
+import { applyTranslations, t } from '../i18n.ts'
+import { refreshCategoryLabels } from './selectionMenu.ts'
 import { switchPageTo, currentPage } from "../main.ts"
 
 export const SettingsMenu = document.getElementById('settings-menu')
@@ -11,12 +12,14 @@ const teamTwoNameInput = document.getElementById('settings-team2-name') as HTMLI
 const roundTimeSelect  = document.getElementById('settings-round-time') as HTMLSelectElement
 const customWordsInput = document.getElementById('settings-custom-words') as HTMLTextAreaElement
 
+const languageSelect = document.getElementById('settings-language') as HTMLSelectElement
+
 let initialized = false
 
-function bindTeamName(input: HTMLInputElement, key: 'teamOneName' | 'teamTwoName', fallback: string) {
+function bindTeamName(input: HTMLInputElement, key: 'teamOneName' | 'teamTwoName') {
     input.value = GameCache[key]
     input.addEventListener('input', () => {
-        GameCache[key] = input.value.trim() || fallback
+        GameCache[key] = input.value.trim() || t(key)
     })
     input.addEventListener('blur', () => {
         input.value = GameCache[key]
@@ -25,7 +28,7 @@ function bindTeamName(input: HTMLInputElement, key: 'teamOneName' | 'teamTwoName
 
 export function initializeSettings() {
     if (initialized || !settingsButton || !teamOneNameInput || !teamTwoNameInput ||
-        !roundTimeSelect || !customWordsInput)
+        !roundTimeSelect || !customWordsInput || !languageSelect)
         return
 
     settingsButton.addEventListener('click', () => {
@@ -35,8 +38,19 @@ export function initializeSettings() {
             switchPageTo({kind: 'menu'})
     })
 
-    bindTeamName(teamOneNameInput, 'teamOneName', DefaultValue_teamOneName)
-    bindTeamName(teamTwoNameInput, 'teamTwoName', DefaultValue_teamTwoName)
+    bindTeamName(teamOneNameInput, 'teamOneName')
+    bindTeamName(teamTwoNameInput, 'teamTwoName')
+
+    languageSelect.value = GameCache.language
+    languageSelect.addEventListener('change', () => {
+        const language = languageSelect.value
+        if (language !== 'ru' && language !== 'en') return
+        GameCache.language = language
+        applyTranslations()
+        refreshCategoryLabels()
+        teamOneNameInput.value = GameCache.teamOneName
+        teamTwoNameInput.value = GameCache.teamTwoName
+    })
 
     roundTimeSelect.addEventListener('change', () => {
         const time = Number.parseInt(roundTimeSelect.value)

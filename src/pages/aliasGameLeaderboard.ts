@@ -1,3 +1,6 @@
+import { GameCache } from '../cache.ts'
+import { t } from '../i18n.ts'
+import { formatScore } from '../locales/ui.ts'
 import { GameTeams, Team } from "../teams.ts";
 import { switchPageTo } from "../main.ts";
 import { ScoreData } from "./pages.ts";
@@ -23,22 +26,6 @@ function nextTurn() {
     }
 }
 
-function pluralizeScore(scoreNum: number): string {
-    const absoluteScore = Math.abs(scoreNum)
-    const lastTwoDigits = absoluteScore % 100
-
-    if (lastTwoDigits >= 11 && lastTwoDigits <= 14)
-        return "очков"
-
-    const lastDigit = absoluteScore % 10
-    if (lastDigit === 1)
-        return "очко"
-    if (lastDigit >= 2 && lastDigit <= 4)
-        return "очка"
-
-    return "очков"
-}
-
 function setupLeaderboardTeam(team: Team) {
     if (leaderboardTeams === null || leaderboardScore === null)
         return
@@ -49,8 +36,7 @@ function setupLeaderboardTeam(team: Team) {
     leaderboardTeams.appendChild(teamName)
 
     const teamScore = document.createElement('p')
-    const pluralized = pluralizeScore(team.score)
-    teamScore.innerText = `${team.score} ${pluralized}`
+    teamScore.innerText = formatScore(GameCache.language, team.score)
     teamScore.className = 'leaderboard-team-score'
     leaderboardScore.appendChild(teamScore)
 }
@@ -110,7 +96,7 @@ export function initializeLeaderboard(data: ScoreData) {
             leaderboardTeams.style.display = 'none'
             leaderboardScore.style.display = 'none'
             const tied = sorted.filter((team) => team.score === currentWinner.score).length > 1
-            leaderboardWinnerText.innerText = tied ? 'Ничья!' : `Победитель: ${winnerName}`
+            leaderboardWinnerText.innerText = tied ? t('draw') : `${t('winner')} ${winnerName}`
 
             const backToMenu = () => {
                 leaderboardWinnerElem.style.display = ''

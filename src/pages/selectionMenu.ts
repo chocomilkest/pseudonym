@@ -1,3 +1,5 @@
+import { ENGLISH_CATEGORY_WORDS } from '../locales/words.en.ts'
+import { ENGLISH_CATEGORY_NAMES } from '../locales/ui.ts'
 import { CATEGORY_BLOCKS_DATA, CATEGORY_WORDS } from '../constants.ts'
 import type { Category } from '../constants.ts'
 import { GameCache } from '../cache.ts'
@@ -23,7 +25,7 @@ let toggledIds: Category[] = [...GameCache.toggledCategories]
 
 function getIncludedWords(): string[] {
     return [...new Set(toggledIds.flatMap((id) =>
-        id === 'custom' ? GameCache.customWords : CATEGORY_WORDS[id]))]
+        id === 'custom' ? GameCache.customWords : (GameCache.language === 'en' ? ENGLISH_CATEGORY_WORDS : CATEGORY_WORDS)[id]))]
 }
 
 function updateButtonState(startButton: HTMLButtonElement) {
@@ -54,7 +56,17 @@ function onStartButtonPress() {
     }
 }
 
+export function refreshCategoryLabels() {
+    categoryBlocks.forEach((block, index) => {
+        const name = GameCache.language === 'en'
+            ? ENGLISH_CATEGORY_NAMES[block.id]
+            : CATEGORY_BLOCKS_DATA[index]!.displayName
+        block.setDisplayName(name)
+    })
+}
+
 export function initializeMenu() {
+    refreshCategoryLabels()
     if (startButton instanceof HTMLButtonElement)
         updateButtonState(startButton)
     if (initialized) return;

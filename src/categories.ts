@@ -53,6 +53,14 @@ export class CategoryBlock {
         return elem
     }
 
+    setDisplayName(name: string) {
+        this.displayName = name
+        const title = this.element?.querySelector('.game-category-block-title')
+        const image = this.element?.querySelector('img')
+        if (title) title.textContent = name
+        if (image) image.alt = name
+    }
+
     toggle() {
         this.toggled = !this.toggled
         this.element?.setAttribute('aria-pressed', this.toggled.toString())

@@ -16,3 +16,11 @@ python3 -m http.server 8080 -d build
 Open http://localhost:8080. The `build/` directory contains the complete static site.
 Settings are saved automatically. Separate custom words with commas, semicolons,
 or new lines; spaces within a phrase are preserved.
+
+Select Russian or English in Settings. The choice applies to the interface and
+all built-in word categories and is saved between visits. Custom words and
+custom team names keep their original text.
+
+UI translations live in `src/locales/ui.ts`. Russian words live in
+`src/constants.ts`, and their English translations in `src/locales/words.en.ts`.
+Keep word entries in matching order; `npm test` checks category coverage and counts.

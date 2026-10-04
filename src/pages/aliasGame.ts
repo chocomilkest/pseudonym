@@ -1,3 +1,4 @@
+import { t } from '../i18n.ts'
 import { GameCache } from "../cache.ts"
 import { switchPageTo } from "../main.ts"
 import { GameData, ScoreData } from "./pages.ts"
@@ -94,7 +95,7 @@ async function startGame(game: GameData) {
         discardButton.disabled = paused
         approveButton.disabled = paused
         gameContent.classList.toggle('paused', paused)
-        pauseButton.textContent = paused ? 'продолжить' : 'пауза'
+        pauseButton.textContent = paused ? t('continue') : t('pause')
         pauseButton.setAttribute('aria-pressed', paused.toString())
 
         if (paused) {
@@ -112,7 +113,7 @@ async function startGame(game: GameData) {
 
     pauseButton.style.display = 'block'
     roundTimer.style.display = 'block'
-    pauseButton.textContent = 'пауза'
+    pauseButton.textContent = t('pause')
     pauseButton.setAttribute('aria-pressed', 'false')
     pauseButton.addEventListener('click', togglePause)
     startTimer()
@@ -143,7 +144,7 @@ async function startGame(game: GameData) {
     pauseButton.style.display = 'none'
     roundTimer.style.display = 'none'
     roundTimer.textContent = ''
-    pauseButton.textContent = 'пауза'
+    pauseButton.textContent = t('pause')
     pauseButton.setAttribute('aria-pressed', 'false')
     discardButton.disabled = false
     approveButton.disabled = false
