@@ -81,6 +81,7 @@ body {
 }
 #header-button-settings {
     margin: 2px;
+    cursor: pointer;
 }
 #header-round-timer {
     position: absolute;

@@ -3,24 +3,10 @@ this is a little website i made for my family cuz alias games on app store and g
 the src is in english, but the ui and the words arent, feel free to fork this if you wanna make this an actual multilingual website
 
 ## how to build
-Requires Node.js 22+, npm, and Python 3 for the local server.
+packages: nodejs, npm and python
 
 ```sh
 npm ci
-npm run check
-npm test
 npm run build
 python3 -m http.server 8080 -d build
 ```
-
-Open http://localhost:8080. The `build/` directory contains the complete static site.
-Settings are saved automatically. Separate custom words with commas, semicolons,
-or new lines; spaces within a phrase are preserved.
-
-Select Russian or English in Settings. The choice applies to the interface and
-all built-in word categories and is saved between visits. Custom words and
-custom team names keep their original text.
-
-UI translations live in `src/locales/ui.ts`. Russian words live in
-`src/constants.ts`, and their English translations in `src/locales/words.en.ts`.
-Keep word entries in matching order; `npm test` checks category coverage and counts.

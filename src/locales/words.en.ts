@@ -1,6 +1,5 @@
 import type { Category } from '../constants.ts'
 
-// Entries follow the same order as the Russian dictionary.
 export const ENGLISH_CATEGORY_WORDS = {
     "transport": [
         "fuel crisis",
